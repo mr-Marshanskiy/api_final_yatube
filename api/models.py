@@ -8,20 +8,20 @@ User = get_user_model()
 class Post(models.Model):
     text = models.TextField()
     pub_date = models.DateTimeField(
-        "Дата публикации",
+        'Дата публикации',
         auto_now_add=True
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="posts"
+        related_name='posts'
     )
     group = models.ForeignKey(
-        "Group",
+        'Group',
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name="groups",
+        related_name='groups',
     )
 
 
@@ -48,12 +48,12 @@ class Follow(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="followers",
+        related_name='followers',
     )
     following = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="followings",
+        related_name='followings',
     )
 
 

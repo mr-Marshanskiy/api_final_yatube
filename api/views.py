@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.generics import get_object_or_404
 
 from .models import Follow, Post, Group
@@ -43,7 +43,13 @@ class CommentViewSet(viewsets.ModelViewSet):
         )
 
 
-class FollowViewSet(viewsets.ModelViewSet):
+class CreateListGeneric(mixins.CreateModelMixin,
+                        mixins.ListModelMixin,
+                        viewsets.GenericViewSet):
+    pass
+
+
+class FollowViewSet(CreateListGeneric):
     serializer_class = FollowSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class = FollowFilter
@@ -57,7 +63,7 @@ class FollowViewSet(viewsets.ModelViewSet):
         )
 
 
-class GroupViewSet(viewsets.ModelViewSet):
+class GroupViewSet(CreateListGeneric):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = (
